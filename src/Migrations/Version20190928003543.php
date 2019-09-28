@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190928000906 extends AbstractMigration
+final class Version20190928003543 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -24,7 +24,7 @@ final class Version20190928000906 extends AbstractMigration
 
         $this->addSql('CREATE TABLE unit_history (id INT AUTO_INCREMENT NOT NULL, author_id INT NOT NULL, created_at DATETIME NOT NULL, INDEX IDX_73F37E89F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE vendor (id INT AUTO_INCREMENT NOT NULL, author_id INT NOT NULL, name VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, INDEX IDX_F52233F6F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, login VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, name VARCHAR(255) DEFAULT NULL, surname VARCHAR(255) DEFAULT NULL, post VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649AA08CB10 (login), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, login VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:array)\', password VARCHAR(255) NOT NULL, name VARCHAR(255) DEFAULT NULL, surname VARCHAR(255) DEFAULT NULL, post VARCHAR(255) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649AA08CB10 (login), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE model (id INT AUTO_INCREMENT NOT NULL, vendor_id INT DEFAULT NULL, author_id INT NOT NULL, name VARCHAR(255) NOT NULL, cost DOUBLE PRECISION DEFAULT NULL, created_at DATETIME NOT NULL, INDEX IDX_D79572D9F603EE73 (vendor_id), INDEX IDX_D79572D9F675F31B (author_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE unit (id INT AUTO_INCREMENT NOT NULL, layer_id INT NOT NULL, parent_id INT DEFAULT NULL, model_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, power_consumption DOUBLE PRECISION DEFAULT NULL, power_generation DOUBLE PRECISION DEFAULT NULL, bandwidth DOUBLE PRECISION DEFAULT NULL, longitude DOUBLE PRECISION DEFAULT NULL, latitude DOUBLE PRECISION DEFAULT NULL, unit_condition DOUBLE PRECISION DEFAULT NULL, INDEX IDX_DCBB0C53EA6EFDCD (layer_id), INDEX IDX_DCBB0C53727ACA70 (parent_id), INDEX IDX_DCBB0C537975B7E7 (model_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE unit_image (unit_id INT NOT NULL, image_id INT NOT NULL, INDEX IDX_4E0F7A54F8BD700D (unit_id), INDEX IDX_4E0F7A543DA5256D (image_id), PRIMARY KEY(unit_id, image_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');
