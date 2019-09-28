@@ -62,7 +62,7 @@ class ApiController extends AbstractController
      */
     public function update(EntityManagerInterface $em, SerializerInterface $serializer, Request $request, string $entityAlias)
     {
-        $entity = $serializer->deserialize($request->request, $this->getEntityName($entityAlias), 'json');
+        $entity = $serializer->deserialize($request->getContent(), $this->getEntityName($entityAlias), 'json');
         $em->flush();
         return $this->json($entity);
     }
