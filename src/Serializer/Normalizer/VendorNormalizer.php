@@ -2,41 +2,42 @@
 
 namespace App\Serializer\Normalizer;
 
-use App\Entity\Layer;
-use App\Entity\User;
+use App\Entity\Vendor;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class LayerNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
+class VendorNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
-    private $userNormalizer;
+    private $normalizer;
 
-    public function __construct(UserNormalizer $normalizer)
+    public function __construct(ObjectNormalizer $normalizer)
     {
-        $this->userNormalizer = $normalizer;
+        $this->normalizer = $normalizer;
     }
 
     /**
-     * @param Layer $object
+     * @param Vendor $object
      * @param null $format
      * @param array $context
      * @return array
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
     public function normalize($object, $format = null, array $context = array()): array
     {
         $data = [
-            'id' => $object->getId(),
             'name' => $object->getName(),
-            'createAt' => $object->getCreatedAt()->getTimestamp(),
-            'author' => $this->userNormalizer->normalize($object->getAuthor(), User::class, $context),
+            'id' => $object->getId(),
         ];
+
+        // Here: add, edit, or delete some data
 
         return $data;
     }
 
     public function supportsNormalization($data, $format = null): bool
     {
-        return $data instanceof Layer;
+        return $data instanceof Vendor;
     }
 
     public function hasCacheableSupportsMethod(): bool

@@ -31,15 +31,22 @@ trait AuthorTrait
 
     public function getAuthor()
     {
-        return $this->getAuthor();
+        return $this->author;
     }
 
+    /**
+     * @param \DateTime $createdAt
+     * @return $this
+     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
+    /**
+     * @return \DateTime
+     */
     public function getCreatedAt()
     {
         return $this->createdAt;

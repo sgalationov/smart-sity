@@ -28,7 +28,7 @@ class Layer implements AuthorInterface
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\EnergyType")
      */
-    private $unit;
+    private $energyType;
 
     public function getId(): ?int
     {
@@ -47,15 +47,16 @@ class Layer implements AuthorInterface
         return $this;
     }
 
-    public function getUnit(): ?EnergyType
+    public function getEnergyType(): ?EnergyType
     {
-        return $this->unit;
+        return $this->energyType;
     }
 
-    public function setUnit(?EnergyType $unit): self
+    public function setEnergyType(?EnergyType $energyType): self
     {
-        $this->unit = $unit;
+        $this->energyType = $energyType;
 
         return $this;
     }
+    
 }
