@@ -27,9 +27,9 @@ class CreateAdminCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Login admin')
-            ->addArgument('arg2', InputArgument::OPTIONAL, 'Password admin')
+            ->setDescription('Create admin with 2 parameters: login and password')
+            ->addArgument('arg1', InputArgument::REQUIRED, 'Login admin')
+            ->addArgument('arg2', InputArgument::REQUIRED, 'Password admin')
         ;
     }
 
@@ -42,8 +42,8 @@ class CreateAdminCommand extends Command
         $user->setLogin($arg1);
         $user->setPassword($this->passwordEncoder->encodePassword($user, $arg2));
         $user->setRoles(['ROLE_ADMIN']);
-//        $this->em->persist($user);
-//        $this->em->flush();
+        $this->em->persist($user);
+        $this->em->flush();
         $io->success('Admin created!');
     }
 }
