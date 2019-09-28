@@ -14,7 +14,7 @@ class InventarizationService
     public function createInventarization(Task $task)
     {
         $inventarization = new Inventarization();
-        $inventarization->setId($task->getId());
+        $inventarization->setId((string)$task->getId());
         $inventarization->setCategoryName($task->getUnit()->getLayer()->getName());
         $inventarization->setDateOfReplacementRequired(
             $task->getUnit()->getLastCheckAt() ? $task->getUnit()->getLastCheckAt()->getTimestamp(): 0
@@ -39,7 +39,7 @@ class InventarizationService
         $inventarization->setLongitude($task->getUnit()->getLongitude());
         $inventarization->setRisk($task->getUnit()->getUnitCondition());
         $inventarization->setName($task->getUnit()->getName());
-        $inventarization->setCheckDate($task->getUnit()->getLastCheckAt()->getTimestamp());
+        $inventarization->setCheckDate($task->getUnit()->getLastCheckAt()?$task->getUnit()->getLastCheckAt()->getTimestamp():null);
         return $inventarization;
     }
 }
