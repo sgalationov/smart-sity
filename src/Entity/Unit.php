@@ -79,10 +79,26 @@ class Unit
      */
     private $unitCondition;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\UnitHistory", mappedBy="unit", orphanRemoval=true)
+     */
+    private $unitHistories;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $lastCheckAt;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $serviceInterval;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->unitHistories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -263,6 +279,61 @@ class Unit
     public function setUnitCondition(?float $unitCondition): self
     {
         $this->unitCondition = $unitCondition;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UnitHistory[]
+     */
+    public function getUnitHistories(): Collection
+    {
+        return $this->unitHistories;
+    }
+
+    public function addUnitHistory(UnitHistory $unitHistory): self
+    {
+        if (!$this->unitHistories->contains($unitHistory)) {
+            $this->unitHistories[] = $unitHistory;
+            $unitHistory->setUnit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUnitHistory(UnitHistory $unitHistory): self
+    {
+        if ($this->unitHistories->contains($unitHistory)) {
+            $this->unitHistories->removeElement($unitHistory);
+            // set the owning side to null (unless already changed)
+            if ($unitHistory->getUnit() === $this) {
+                $unitHistory->setUnit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLastCheckAt(): ?\DateTimeInterface
+    {
+        return $this->lastCheckAt;
+    }
+
+    public function setLastCheckAt(?\DateTimeInterface $lastCheckAt): self
+    {
+        $this->lastCheckAt = $lastCheckAt;
+
+        return $this;
+    }
+
+    public function getServiceInterval(): ?int
+    {
+        return $this->serviceInterval;
+    }
+
+    public function setServiceInterval(?int $serviceInterval): self
+    {
+        $this->serviceInterval = $serviceInterval;
 
         return $this;
     }
