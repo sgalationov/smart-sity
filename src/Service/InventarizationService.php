@@ -25,7 +25,7 @@ class InventarizationService
         }, $task->getImages()->toArray()));
         $inventarization->setListOfFixed(array_map(function (UnitHistory $unitHistory) {
             return [
-                'time' => $unitHistory->getCreatedAt(),
+                'time' => $unitHistory->getCreatedAt()->getTimestamp(),
                 'description' => $unitHistory->getComment()?:''
             ];
         }, $task->getUnit()->getUnitHistories()->toArray()));
