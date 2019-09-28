@@ -30,7 +30,7 @@ class Unit
     private $layer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Unit", inversedBy="children")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Unit", inversedBy="children", fetch="EAGER")
      */
     private $parent;
 

@@ -22,9 +22,7 @@ final class Version20190928073305 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE task DROP fact_datetest');
         $this->addSql('ALTER TABLE layer DROP FOREIGN KEY FK_E4DB211AF8BD700D');
-        $this->addSql('DROP INDEX IDX_E4DB211AF8BD700D ON layer');
         $this->addSql('ALTER TABLE layer CHANGE unit_id energy_type_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE layer ADD CONSTRAINT FK_E4DB211A80726647 FOREIGN KEY (energy_type_id) REFERENCES energy_type (id)');
         $this->addSql('CREATE INDEX IDX_E4DB211A80726647 ON layer (energy_type_id)');

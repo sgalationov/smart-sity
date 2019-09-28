@@ -30,7 +30,7 @@ class TaskNormalizer implements NormalizerInterface, CacheableSupportsMethodInte
         $data = [
             'id' => $object->getId(),
             'name' => $this->normalizer->normalize($object, $format, $context),
-            'unit' => $object->getUnit() ?? $this->unitNormalizer->normalize($object->getUnit(), $format, $context),
+            'unit' => $object->getUnit() ? $this->unitNormalizer->normalize($object->getUnit(), $format, $context) : null,
         ];
 
         // Here: add, edit, or delete some data

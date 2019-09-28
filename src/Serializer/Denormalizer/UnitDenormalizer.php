@@ -19,6 +19,8 @@ class UnitDenormalizer implements DenormalizerInterface
         $entity->setPowerConsumption($data['powerConsumption'] ?? $entity->getPowerConsumption());
         $entity->setPowerGeneration($data['powerGeneration'] ?? $entity->getPowerGeneration());
         $entity->setBandwidth($data['bandwidth'] ?? $entity->getBandwidth());
+        $entity->setLatitude($data['latitude'] ?? $entity->getLatitude());
+        $entity->setLongitude($data['longitude'] ?? $entity->getLongitude());
         if (array_key_exists('layer', $data)) {
             /** @var Layer $chat */
             $layer = $this->getSerializer()->denormalize($data['layer'], Layer::class, $format, $context);
@@ -26,8 +28,8 @@ class UnitDenormalizer implements DenormalizerInterface
         }
         if (array_key_exists('parent', $data)) {
             /** @var Unit $parent */
-            $parent = $this->getSerializer()->denormalize($data['parent'], Unit::class, $format, $context);
-            $entity->setLayer($parent);
+            $parent = $this->denormalize($data['parent'], Unit::class, $format, $context);
+            $entity->setParent($parent);
         }
         return $entity;
     }
