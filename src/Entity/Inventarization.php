@@ -22,11 +22,11 @@ class Inventarization
     protected $listOfFixed;
     /** @var integer */
     protected $status;
-    /** @var float */
+    /** @var float|null */
     protected $longitude;
-    /** @var float */
+    /** @var float|null */
     protected $latitude;
-    /** @var integer */
+    /** @var integer|null */
     protected $risk;
 
 
@@ -159,49 +159,49 @@ class Inventarization
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }
 
     /**
-     * @param float $longitude
+     * @param float|null $longitude
      */
-    public function setLongitude(float $longitude): void
+    public function setLongitude(?float $longitude): void
     {
         $this->longitude = $longitude;
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getLatitude(): float
+    public function getLatitude(): ?float
     {
         return $this->latitude;
     }
 
     /**
-     * @param float $latitude
+     * @param float|null $latitude
      */
-    public function setLatitude(float $latitude): void
+    public function setLatitude(?float $latitude): void
     {
         $this->latitude = $latitude;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getRisk(): int
+    public function getRisk(): ?int
     {
         return $this->risk;
     }
 
     /**
-     * @param int $risk
+     * @param int|null $risk
      */
-    public function setRisk(int $risk): void
+    public function setRisk(?int $risk): void
     {
         $this->risk = $risk;
     }
