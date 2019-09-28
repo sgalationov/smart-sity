@@ -41,7 +41,7 @@ class InventarizationController extends AbstractController
      * @param Request $request
      * @param string $entityAlias
      * @return JsonResponse
-     * @Route("/api/v", name="api_update")
+     * @Route("/update", name="inventarization_update")
      */
     public function update(EntityManagerInterface $em, SerializerInterface $serializer, Request $request, string $entityAlias)
     {
