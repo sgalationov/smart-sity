@@ -26,7 +26,7 @@ class InventarizationService
         $inventarization->setListOfFixed(array_map(function (UnitHistory $unitHistory) {
             return [
                 'time' => $unitHistory->getCreatedAt(),
-                'description' => $unitHistory->getId()
+                'description' => $unitHistory->getComment()
             ];
         }, $task->getUnit()->getUnitHistories()->toArray()));
         $inventarization->setType(
