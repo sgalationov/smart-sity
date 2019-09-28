@@ -29,6 +29,9 @@ class InventarizationService
             $task->getUnit()->getModel()->getVendor()->getName());
         $inventarization->setParametrsUnit($task->getComment());
         $inventarization->setStatus($task->getStatus());
+        $inventarization->setLatitude($task->getUnit()->getLatitude());
+        $inventarization->setLongitude($task->getUnit()->getLongitude());
+        $inventarization->setRisk($task->getUnit()->getUnitCondition());
         return $inventarization;
     }
 }
