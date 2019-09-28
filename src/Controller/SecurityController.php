@@ -14,7 +14,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="layer")
+     * @Route("/login", name="login")
      */
     public function login
     (

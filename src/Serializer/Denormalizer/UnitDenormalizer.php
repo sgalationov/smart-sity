@@ -2,6 +2,7 @@
 
 namespace App\Serializer\Denormalizer;
 
+use App\Entity\Image;
 use App\Entity\Layer;
 use App\Entity\Unit;
 use App\Helper\DenormalizerTrait;
@@ -21,7 +22,11 @@ class UnitDenormalizer implements DenormalizerInterface
         $entity->setBandwidth($data['bandwidth'] ?? $entity->getBandwidth());
         $entity->setLatitude($data['latitude'] ?? $entity->getLatitude());
         $entity->setLongitude($data['longitude'] ?? $entity->getLongitude());
-        if (array_key_exists('layer', $data)) {
+        if (array_key_exists('image', $data)) {
+            /** @var Layer $chat */
+            $image = $this->getSerializer()->denormalize($data['image'], Image::class, $format, $context);
+            $entity->addImage($image);
+        }if (array_key_exists('layer', $data)) {
             /** @var Layer $chat */
             $layer = $this->getSerializer()->denormalize($data['layer'], Layer::class, $format, $context);
             $entity->setLayer($layer);
