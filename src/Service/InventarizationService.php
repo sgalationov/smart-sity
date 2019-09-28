@@ -7,6 +7,7 @@ namespace App\Service;
 use App\Entity\Image;
 use App\Entity\Inventarization;
 use App\Entity\Task;
+use App\Entity\UnitHistory;
 
 class InventarizationService
 {
@@ -22,7 +23,12 @@ class InventarizationService
         $inventarization->setImegesOfUnit(array_map(function (Image $image) {
             return $image->getPath();
         }, $task->getImages()->toArray()));
-        $inventarization->setListOfFixed($task->getUnit()->getUnitHistories()->toArray());
+        $inventarization->setListOfFixed(array_map(function (UnitHistory $unitHistory) {
+            return [
+                'time' => $unitHistory->getCreatedAt(),
+                'description' => $unitHistory->getId()
+            ];
+        }, $task->getUnit()->getUnitHistories()->toArray()));
         $inventarization->setType(
             $task->getUnit()->getModel()->getName() .
             ' ' .
@@ -32,6 +38,8 @@ class InventarizationService
         $inventarization->setLatitude($task->getUnit()->getLatitude());
         $inventarization->setLongitude($task->getUnit()->getLongitude());
         $inventarization->setRisk($task->getUnit()->getUnitCondition());
+        $inventarization->setName($task->getUnit()->getName());
+        $inventarization->setCheckDate($task->getUnit()->getLastCheckAt()->getTimestamp());
         return $inventarization;
     }
 }

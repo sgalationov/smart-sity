@@ -4,6 +4,8 @@
 namespace App\Entity;
 
 
+use http\Encoding\Stream\Inflate;
+
 class Inventarization
 {
     /** @var int */
@@ -28,7 +30,10 @@ class Inventarization
     protected $latitude;
     /** @var integer|null */
     protected $risk;
-
+    /** @var string */
+    protected $name;
+    /** @var integer|null */
+    protected $checkDate;
 
     /**
      * @return int
@@ -204,5 +209,37 @@ class Inventarization
     public function setRisk(?int $risk): void
     {
         $this->risk = $risk;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCheckDate(): ?int
+    {
+        return $this->checkDate;
+    }
+
+    /**
+     * @param int|null $checkDate
+     */
+    public function setCheckDate(?int $checkDate): void
+    {
+        $this->checkDate = $checkDate;
     }
 }

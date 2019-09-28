@@ -26,6 +26,11 @@ class UnitHistory implements AuthorInterface
      */
     private $unit;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $comment;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +44,18 @@ class UnitHistory implements AuthorInterface
     public function setUnit(?Unit $unit): self
     {
         $this->unit = $unit;
+
+        return $this;
+    }
+
+    public function getComment(): ?string
+    {
+        return $this->comment;
+    }
+
+    public function setComment(?string $comment): self
+    {
+        $this->comment = $comment;
 
         return $this;
     }
