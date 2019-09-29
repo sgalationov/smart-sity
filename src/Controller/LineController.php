@@ -6,6 +6,8 @@ use App\Entity\Device;
 use App\Entity\Layer;
 use App\Entity\Unit;
 use App\Entity\User;
+use App\Repository\LayerRepository;
+use App\Repository\UnitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,11 +24,78 @@ class LineController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      * @Route("/index", name="line_index")
      */
-    public function index()
+    public function index(LayerRepository $layerRepository, UnitRepository $unitRepository)
     {
+        $layers = $layerRepository->getLayers();
+        $arrayUnits = [];
+        $units = $unitRepository->findAll();
+        foreach ($units as $unit) {
+            $arrayUnits[$unit->getLayer()->getExternalId()][$unit->getLineId()] = [
+                "id" => $unit->getExternalId(),
+                "lineIdК" => $unit->getLineId(),
+                "layerId" => $unit->getLayer()->getExternalId(),
+                "lat" => $unit->getLatitude(),
+                "lng" => $unit->getLongitude(),
+                "info" => [
+                    "status" => 'warning',
+                    "name" => $unit->getName(),
+                    "date" => $unit->getLastCheckAt(),
+                    "stat" => 'Наземный',
+                    "type" => 'Наземный',
+                    "category" => 'Категория',
+                    "bandwidth" => $unit->getBandwidth(),
+                    "forecast" => 'Прогноз',
+                    "fotos" => [],
+                    "risk" => $unit->getUnitCondition(),
+                    "history" => [
+                        [
+                            "date" => time(),
+                            "text" => 'Ввод в эксплуатацию',
+                            "performer" => 'Теплосети'
+                        ]
+                    ]
+                ]
+            ];
+        }
+        $data = [
+            [
+                "id" => 'water',
+                "isActive" => true,
+                "text" => 'Водяные сети',
+                "color" => 'blue',
+                "lines" => [],
+            ],
+            [
+                "id" => 'gaz',
+                "isActive" => false,
+                "text" => 'Газовые сети',
+                "color" => 'green',
+                "lines" => [],
+            ],
+            [
+                "id" => 'electricity',
+                "isActive" => false,
+                "text" => 'Электрические сети',
+                "color" => 'yellow',
+                "lines" => [],
+            ],
+            [
+                "id" => 'warm',
+                "isActive" => false,
+                "text" => 'Тепловые сети',
+                "color" => 'red',
+                "lines" => [],
+            ]
+        ];
+        foreach ($data as &$arrlayer) {
+            if (key_exists($arrlayer['id'], $arrayUnits)) {
+                foreach ($arrayUnits[$arrlayer['id']] as $lineExtId => $arrayUnit) {
+                    $arrlayer["lines"][$lineExtId][] = $arrayUnit;
+                }
+            }
+        }
         return $this->json([
                 [
-
                     "id" => 'water',
                     "isActive" => true,
                     "text" => 'Водяные сети',
@@ -300,10 +369,14 @@ class LineController extends AbstractController
                     $unit->setName($eUnit['info']['name']);
                     $unit->setLongitude($eUnit['lng']);
                     $unit->setLatitude($eUnit['lat']);
+                    $unit->setLineId($eUnit['lineId']);
                     $unit->setBandwidth($eUnit['info']['bandwidth']);
                     $date = new \DateTime();
-                    $date->setTimestamp($eUnit['info']['history'][0]['date']);
+                    $date->setTimestamp($eUnit['info']['date']);
                     $unit->setLastCheckAt($date);
+                    $date1 = new \DateTime();
+                    $date1->setTimestamp($eUnit['info']['history'][0]['date']);
+                    $unit->setLastCheckAt($date1);
                     $unit->setLayer($layers[$eUnit['layerId']]);
                 } else {
                     $unit = $oldUnits[$eUnit['id']];
