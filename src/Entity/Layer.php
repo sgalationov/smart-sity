@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Helper\AuthorInterface;
 use App\Helper\AuthorTrait;
+use App\Helper\ExternalTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Layer implements AuthorInterface
 {
     use AuthorTrait;
+    use ExternalTrait;
 
     /**
      * @ORM\Id()

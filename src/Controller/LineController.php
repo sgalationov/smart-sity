@@ -31,84 +31,86 @@ class LineController extends AbstractController
                     "text" => 'Водяные сети',
                     "color" => 'blue',
                     "lines" => [
-                        [
-                            "id" => 'water1',
-                            "lineIdК" => 'linewater1',
-                            "layerId" => 'water',
-                            "lat" => 51.54355876453761,
-                            "lng" => 46.01014137268067,
-                            "info" => [
-                                "status" => 'warning',
-                                "name" => 'Название элемента',
-                                "date" => time(),
-                                "stat" => 'Наземный',
-                                "type" => 'Наземный',
-                                "category" => 'Категория',
-                                "bandwidth" => 43434,
-                                "forecast" => 'Прогноз',
-                                "fotos" => [],
-                                "risk" => 3434,
-                                "history" => [
-                                    [
-                                        "date" => time(),
-                                        "text" => 'Ввод в эксплуатацию',
-                                        "performer" => 'Теплосети'
+                        'linewater1' => [
+                            [
+                                "id" => 'water1',
+                                "lineIdК" => 'linewater1',
+                                "layerId" => 'water',
+                                "lat" => 51.54355876453761,
+                                "lng" => 46.01014137268067,
+                                "info" => [
+                                    "status" => 'warning',
+                                    "name" => 'Название элемента',
+                                    "date" => time(),
+                                    "stat" => 'Наземный',
+                                    "type" => 'Наземный',
+                                    "category" => 'Категория',
+                                    "bandwidth" => 43434,
+                                    "forecast" => 'Прогноз',
+                                    "fotos" => [],
+                                    "risk" => 3434,
+                                    "history" => [
+                                        [
+                                            "date" => time(),
+                                            "text" => 'Ввод в эксплуатацию',
+                                            "performer" => 'Теплосети'
+                                        ]
                                     ]
                                 ]
-                            ]
-                        ],
-                        [
-                            "id" => 'water2',
-                            "lineId" => 'linewater1',
-                            "layerId" => 'water',
-                            "lat" => 51.529357812115485,
-                            "lng" => 46.03966712951661,
-                            "info" => [
-                                "status" => 'success',
-                                "name" => 'Название элемента',
-                                "date" => time(),
-                                "stat" => 'Наземный',
-                                "type" => 'Наземный',
-                                "category" => 'Категория',
-                                "bandWidth" => 43434,
-                                "forecast" => 'Прогноз',
-                                "fotos" => [],
-                                "risk" => 3434,
-                                "history" => [
-                                    [
-                                        "date" => time(),
-                                        "text" => 'Ввод в эксплуатацию',
-                                        "performer" => 'Теплосети'
+                            ],
+                            [
+                                "id" => 'water2',
+                                "lineId" => 'linewater1',
+                                "layerId" => 'water',
+                                "lat" => 51.529357812115485,
+                                "lng" => 46.03966712951661,
+                                "info" => [
+                                    "status" => 'success',
+                                    "name" => 'Название элемента',
+                                    "date" => time(),
+                                    "stat" => 'Наземный',
+                                    "type" => 'Наземный',
+                                    "category" => 'Категория',
+                                    "bandWidth" => 43434,
+                                    "forecast" => 'Прогноз',
+                                    "fotos" => [],
+                                    "risk" => 3434,
+                                    "history" => [
+                                        [
+                                            "date" => time(),
+                                            "text" => 'Ввод в эксплуатацию',
+                                            "performer" => 'Теплосети'
+                                        ]
                                     ]
                                 ]
-                            ]
-                        ],
-                        [
-                            "id" => 'water3',
-                            "lineId" => 'linewater1',
-                            "layerId" => 'water',
-                            "lat" => 51.53373482374044,
-                            "lng" => 46.05949401855469,
-                            "info" => [
-                                "status" => 'danger',
-                                "name" => 'Название элемента',
-                                "date" => time(),
-                                "stat" => 'Наземный',
-                                "type" => 'Наземный',
-                                "category" => 'Категория',
-                                "bandwidth" => 43434,
-                                "forecast" => 'Прогноз',
-                                "fotos" => [],
-                                "risk" => 3434,
-                                "history" => [
-                                    [
-                                        "date" => time(),
-                                        "text" => 'Ввод в эксплуатацию',
-                                        "performer" => 'Теплосети'
+                            ],
+                            [
+                                "id" => 'water3',
+                                "lineId" => 'linewater1',
+                                "layerId" => 'water',
+                                "lat" => 51.53373482374044,
+                                "lng" => 46.05949401855469,
+                                "info" => [
+                                    "status" => 'danger',
+                                    "name" => 'Название элемента',
+                                    "date" => time(),
+                                    "stat" => 'Наземный',
+                                    "type" => 'Наземный',
+                                    "category" => 'Категория',
+                                    "bandwidth" => 43434,
+                                    "forecast" => 'Прогноз',
+                                    "fotos" => [],
+                                    "risk" => 3434,
+                                    "history" => [
+                                        [
+                                            "date" => time(),
+                                            "text" => 'Ввод в эксплуатацию',
+                                            "performer" => 'Теплосети'
+                                        ]
                                     ]
                                 ]
-                            ]
-                        ],
+                            ],
+                        ]
                     ]
                 ],
                 [
@@ -286,16 +288,18 @@ class LineController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em)
     {
         $data = json_decode($request->getContent(), true);
-        $unit = new Unit();
-        $unit->setName($data['']);
-        $unit->setLongitude($data['']);
-        $unit->setLatitude($data['']);
-        $unit->setBandwidth($data['']);
-        $unit->setPowerGeneration($data['']);
-        $unit->setPowerConsumption($data['']);
-        $unit->setLastCheckAt($data['']);
+        foreach ($data as $datum) {
+            $unit = new Unit();
+            $unit->setName($data['']);
+            $unit->setLongitude($data['']);
+            $unit->setLatitude($data['']);
+            $unit->setBandwidth($data['']);
+            $unit->setPowerGeneration($data['']);
+            $unit->setPowerConsumption($data['']);
+            $unit->setLastCheckAt($data['']);
 //        $unit->setLayer();
 //        $unit->setParent();
+        }
         return $this->json($data);
     }
 
