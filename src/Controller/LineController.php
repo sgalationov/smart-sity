@@ -40,7 +40,7 @@ class LineController extends AbstractController
                     "info" => [
                         "status" => 'warning',
                         "name" => $unit->getName(),
-                        "date" => $unit->getLastCheckAt(),
+                        "date" => $unit->getLastCheckAt()->getTimestamp(),
                         "stat" => 'Наземный',
                         "type" => 'Наземный',
                         "category" => 'Категория',
@@ -92,7 +92,7 @@ class LineController extends AbstractController
         foreach ($data as &$arrlayer) {
             if (key_exists($arrlayer['id'], $arrayUnits)) {
                 foreach ($arrayUnits[$arrlayer['id']] as $lineExtId => $arrayUnit) {
-                    $arrlayer["lines"][$lineExtId][] = $arrayUnit;
+                    $arrlayer["lines"][$lineExtId] = $arrayUnit;
                 }
             }
         }
