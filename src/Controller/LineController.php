@@ -30,32 +30,34 @@ class LineController extends AbstractController
         $arrayUnits = [];
         $units = $unitRepository->findAll();
         foreach ($units as $unit) {
-            $arrayUnits[$unit->getLayer()->getExternalId()][$unit->getLineId()] = [
-                "id" => $unit->getExternalId(),
-                "lineIdК" => $unit->getLineId(),
-                "layerId" => $unit->getLayer()->getExternalId(),
-                "lat" => $unit->getLatitude(),
-                "lng" => $unit->getLongitude(),
-                "info" => [
-                    "status" => 'warning',
-                    "name" => $unit->getName(),
-                    "date" => $unit->getLastCheckAt(),
-                    "stat" => 'Наземный',
-                    "type" => 'Наземный',
-                    "category" => 'Категория',
-                    "bandwidth" => $unit->getBandwidth(),
-                    "forecast" => 'Прогноз',
-                    "fotos" => [],
-                    "risk" => $unit->getUnitCondition(),
-                    "history" => [
-                        [
-                            "date" => time(),
-                            "text" => 'Ввод в эксплуатацию',
-                            "performer" => 'Теплосети'
+            if ($unit->getLineId()) {
+                $arrayUnits[$unit->getLayer()->getExternalId()][$unit->getLineId()][] = [
+                    "id" => $unit->getExternalId(),
+                    "lineIdК" => $unit->getLineId(),
+                    "layerId" => $unit->getLayer()->getExternalId(),
+                    "lat" => $unit->getLatitude(),
+                    "lng" => $unit->getLongitude(),
+                    "info" => [
+                        "status" => 'warning',
+                        "name" => $unit->getName(),
+                        "date" => $unit->getLastCheckAt(),
+                        "stat" => 'Наземный',
+                        "type" => 'Наземный',
+                        "category" => 'Категория',
+                        "bandwidth" => $unit->getBandwidth(),
+                        "forecast" => 'Прогноз',
+                        "fotos" => [],
+                        "risk" => $unit->getUnitCondition(),
+                        "history" => [
+                            [
+                                "date" => time(),
+                                "text" => 'Ввод в эксплуатацию',
+                                "performer" => 'Теплосети'
+                            ]
                         ]
                     ]
-                ]
-            ];
+                ];
+            }
         }
         $data = [
             [
@@ -94,118 +96,7 @@ class LineController extends AbstractController
                 }
             }
         }
-        return $this->json([
-                [
-                    "id" => 'water',
-                    "isActive" => true,
-                    "text" => 'Водяные сети',
-                    "color" => 'blue',
-                    "lines" => [
-                        'linewater1' => [
-                            [
-                                "id" => 'water1',
-                                "lineIdК" => 'linewater1',
-                                "layerId" => 'water',
-                                "lat" => 51.54355876453761,
-                                "lng" => 46.01014137268067,
-                                "info" => [
-                                    "status" => 'warning',
-                                    "name" => 'Название элемента',
-                                    "date" => time(),
-                                    "stat" => 'Наземный',
-                                    "type" => 'Наземный',
-                                    "category" => 'Категория',
-                                    "bandwidth" => 43434,
-                                    "forecast" => 'Прогноз',
-                                    "fotos" => [],
-                                    "risk" => 3434,
-                                    "history" => [
-                                        [
-                                            "date" => time(),
-                                            "text" => 'Ввод в эксплуатацию',
-                                            "performer" => 'Теплосети'
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            [
-                                "id" => 'water2',
-                                "lineId" => 'linewater1',
-                                "layerId" => 'water',
-                                "lat" => 51.529357812115485,
-                                "lng" => 46.03966712951661,
-                                "info" => [
-                                    "status" => 'success',
-                                    "name" => 'Название элемента',
-                                    "date" => time(),
-                                    "stat" => 'Наземный',
-                                    "type" => 'Наземный',
-                                    "category" => 'Категория',
-                                    "bandWidth" => 43434,
-                                    "forecast" => 'Прогноз',
-                                    "fotos" => [],
-                                    "risk" => 3434,
-                                    "history" => [
-                                        [
-                                            "date" => time(),
-                                            "text" => 'Ввод в эксплуатацию',
-                                            "performer" => 'Теплосети'
-                                        ]
-                                    ]
-                                ]
-                            ],
-                            [
-                                "id" => 'water3',
-                                "lineId" => 'linewater1',
-                                "layerId" => 'water',
-                                "lat" => 51.53373482374044,
-                                "lng" => 46.05949401855469,
-                                "info" => [
-                                    "status" => 'danger',
-                                    "name" => 'Название элемента',
-                                    "date" => time(),
-                                    "stat" => 'Наземный',
-                                    "type" => 'Наземный',
-                                    "category" => 'Категория',
-                                    "bandwidth" => 43434,
-                                    "forecast" => 'Прогноз',
-                                    "fotos" => [],
-                                    "risk" => 3434,
-                                    "history" => [
-                                        [
-                                            "date" => time(),
-                                            "text" => 'Ввод в эксплуатацию',
-                                            "performer" => 'Теплосети'
-                                        ]
-                                    ]
-                                ]
-                            ],
-                        ]
-                    ]
-                ],
-                [
-                    "id" => 'gaz',
-                    "isActive" => false,
-                    "text" => 'Газовые сети',
-                    "color" => 'green',
-                    "lines" => [],
-                ],
-                [
-                    "id" => 'electricity',
-                    "isActive" => false,
-                    "text" => 'Электрические сети',
-                    "color" => 'yellow',
-                    "lines" => [],
-                ],
-                [
-                    "id" => 'warm',
-                    "isActive" => false,
-                    "text" => 'Тепловые сети',
-                    "color" => 'red',
-                    "lines" => [],
-                ]
-            ]
-        );
+        return $this->json($data);
     }
 
     /**
