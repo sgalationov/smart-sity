@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Unit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Unit|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +18,14 @@ class UnitRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Unit::class);
+    }
+
+    public function getOldUnits($idLine)
+    {
+        $qb = $this->createQueryBuilder('u', 'u.externalId');
+        $qb->where($qb->expr()->eq('u.lineId', ':eid'));
+        $qb->setParameter(':eid', $idLine);
+        return $qb->getQuery()->getResult();
     }
 
     // /**

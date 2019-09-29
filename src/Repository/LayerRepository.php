@@ -19,6 +19,11 @@ class LayerRepository extends ServiceEntityRepository
         parent::__construct($registry, Layer::class);
     }
 
+    public function getLayers()
+    {
+        $qb = $this->createQueryBuilder('l', 'l.externalId');
+        return $qb->getQuery()->getResult();
+    }
     // /**
     //  * @return Layer[] Returns an array of Layer objects
     //  */

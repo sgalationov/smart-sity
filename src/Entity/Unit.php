@@ -12,8 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Unit
 {
-    use ExternalTrait;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -96,6 +94,28 @@ class Unit
      * @ORM\Column(type="integer", nullable=true)
      */
     private $serviceInterval;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lineId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $externalId;
+
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
+    }
+
+    public function setExternalId(?string $externalId): self
+    {
+        $this->externalId = $externalId;
+
+        return $this;
+    }
 
     public function __construct()
     {
@@ -337,6 +357,18 @@ class Unit
     public function setServiceInterval(?int $serviceInterval): self
     {
         $this->serviceInterval = $serviceInterval;
+
+        return $this;
+    }
+
+    public function getLineId(): ?string
+    {
+        return $this->lineId;
+    }
+
+    public function setLineId(?string $lineId): self
+    {
+        $this->lineId = $lineId;
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Device;
+use App\Entity\Layer;
 use App\Entity\Unit;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -288,20 +289,33 @@ class LineController extends AbstractController
     public function create(Request $request, EntityManagerInterface $em)
     {
         $data = json_decode($request->getContent(), true);
-        foreach ($data as $datum) {
-            $unit = new Unit();
-            $unit->setName($data['']);
-            $unit->setLongitude($data['']);
-            $unit->setLatitude($data['']);
-            $unit->setBandwidth($data['']);
-            $unit->setPowerGeneration($data['']);
-            $unit->setPowerConsumption($data['']);
-            $unit->setLastCheckAt($data['']);
-//        $unit->setLayer();
-//        $unit->setParent();
+        $layers = $em->getRepository(Layer::class)->getLayers();
+        foreach ($data as $idLine => $datum) {
+            $oldUnits = $em->getRepository(Unit::class)->getOldUnits($idLine);
+            $parent = false;
+            foreach ($datum as $eUnit) {
+                if (!key_exists($eUnit['id'], $oldUnits)) {
+                    $unit = new Unit();
+                    $unit->setExternalId($eUnit['id']);
+                    $unit->setName($eUnit['info']['name']);
+                    $unit->setLongitude($eUnit['lng']);
+                    $unit->setLatitude($eUnit['lat']);
+                    $unit->setBandwidth($eUnit['info']['bandwidth']);
+                    $date = new \DateTime();
+                    $date->setTimestamp($eUnit['info']['history'][0]['date']);
+                    $unit->setLastCheckAt($date);
+                    $unit->setLayer($layers[$eUnit['layerId']]);
+                } else {
+                    $unit = $oldUnits[$eUnit['id']];
+                }
+                if ($parent) {
+                    $unit->setParent($parent);
+                }
+                $parent = $unit;
+                $em->persist($unit);
+            }
         }
+        $em->flush();
         return $this->json($data);
     }
-
-
 }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190929061436 extends AbstractMigration
+final class Version20190929065146 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,7 +22,7 @@ final class Version20190929061436 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE unit ADD external_id VARCHAR(255) DEFAULT NULL');
+        $this->addSql('ALTER TABLE unit ADD line_id VARCHAR(255) DEFAULT NULL, ADD external_id VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE layer ADD external_id VARCHAR(255) DEFAULT NULL');
     }
 
@@ -32,6 +32,6 @@ final class Version20190929061436 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE layer DROP external_id');
-        $this->addSql('ALTER TABLE unit DROP external_id');
+        $this->addSql('ALTER TABLE unit DROP line_id, DROP external_id');
     }
 }
